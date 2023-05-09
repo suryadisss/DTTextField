@@ -46,6 +46,7 @@ open class DTTextField: UITextField {
         case sqare
         case top
         case bottom
+        case bottomspecial
         case left
         case right
     }
@@ -58,8 +59,8 @@ open class DTTextField: UITextField {
     fileprivate let paddingHeight:CGFloat                   = 10.0
     fileprivate var borderLayer:CALayer                     = CALayer()
     public var dtLayer:CALayer                              = CALayer()
-    public var floatPlaceholderColor:UIColor                = UIColor.black
-    public var floatPlaceholderActiveColor:UIColor          = UIColor.black
+    public var floatPlaceholderColor:UIColor                =  UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1.0)
+    public var floatPlaceholderActiveColor:UIColor          =  UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1.0)
     public var floatingLabelShowAnimationDuration           = 0.3
     public var floatingDisplayStatus:FloatingDisplayStatus  = .always
     public var borderWidth:CGFloat                          = 0.5{
@@ -84,12 +85,14 @@ open class DTTextField: UITextField {
                 dtLayer.cornerRadius        = 0.0
                 dtLayer.borderWidth         = borderWidth
                 dtLayer.borderColor         = borderColor.cgColor
-            case .bottom,.left,.right,.top:
+            case .bottom,.left,.right,.top,.bottomspecial:
                 dtLayer.cornerRadius        = 0.0
                 dtLayer.borderWidth         = 0.0
                 borderLayer.backgroundColor = borderColor.cgColor
                 if dtborderStyle == .bottom {
                     borderLayer.frame = CGRect(x: 0, y: dtLayer.bounds.size.height - borderWidth, width: dtLayer.bounds.size.width, height: borderWidth)
+                }else if dtborderStyle == .bottomspecial {
+                    borderLayer.frame = CGRect(x: 0, y: 30, width: dtLayer.bounds.size.width, height: borderWidth)
                 }else if dtborderStyle == .left{
                     borderLayer.frame = CGRect(x: 0, y: 0, width: borderWidth, height: dtLayer.bounds.size.height)
                 }else if dtborderStyle == .right{
@@ -122,7 +125,7 @@ open class DTTextField: UITextField {
         }
     }
     
-    public var floatPlaceholderFont =   UIFont(name:"Roboto", size: 10.0) ?? UIFont.systemFont(ofSize: 10){
+    public var floatPlaceholderFont =   UIFont(name:"Inter-Regular", size: 12.0) ?? UIFont.systemFont(ofSize: 10){
         didSet{
             lblFloatPlaceholder.font = floatPlaceholderFont
             invalidateIntrinsicContentSize()
@@ -142,7 +145,7 @@ open class DTTextField: UITextField {
             switch dtborderStyle {
             case .none,.rounded,.sqare:
                 dtLayer.borderColor = borderColor.cgColor
-            case .bottom,.right,.top,.left:
+            case .bottom,.right,.top,.left,.bottomspecial:
                 borderLayer.backgroundColor = borderColor.cgColor
             }
         }
@@ -153,7 +156,7 @@ open class DTTextField: UITextField {
             switch dtborderStyle {
             case .none,.rounded,.sqare:
                 dtLayer.isHidden = !canShowBorder
-            case .bottom,.right,.top,.left:
+            case .bottom,.right,.top,.left,.bottomspecial:
                 borderLayer.isHidden = !canShowBorder
             }
         }
@@ -286,8 +289,8 @@ open class DTTextField: UITextField {
         dtborderStyle               = .bottom
         dtLayer.backgroundColor     = UIColor.white.cgColor
         
-        floatPlaceholderColor       = UIColor.black
-        floatPlaceholderActiveColor = UIColor.black
+        floatPlaceholderColor       =  UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1.0)
+        floatPlaceholderActiveColor =  UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1.0)
         lblFloatPlaceholder.frame   = CGRect.zero
         lblFloatPlaceholder.alpha   = 0.0
         lblFloatPlaceholder.font    = floatPlaceholderFont

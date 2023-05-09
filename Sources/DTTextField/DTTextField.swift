@@ -29,10 +29,6 @@ public extension String {
 
 
 open class DTTextField: UITextField {
-   
-    
-    
-  
     
     public enum FloatingDisplayStatus{
         case always
@@ -294,7 +290,7 @@ open class DTTextField: UITextField {
         lblFloatPlaceholder.frame   = CGRect.zero
         lblFloatPlaceholder.alpha   = 0.0
         lblFloatPlaceholder.font    = floatPlaceholderFont
-        lblFloatPlaceholder.text    = placeholderFinal
+        lblFloatPlaceholder.text    = placeholderFinal.replacingOccurrences(of: "Masukkan ", with: "")
         
         addSubview(lblFloatPlaceholder)
         

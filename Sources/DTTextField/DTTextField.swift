@@ -108,20 +108,20 @@ open class DTTextField: UITextField {
     public var animateFloatPlaceholder:Bool = true
     public var hideErrorWhenEditing:Bool   = true
     
-    public var errorFont = UIFont.systemFont(ofSize: 10.0){
+    public var errorFont = UIFont.systemFont(ofSize: 12.0){
         didSet{
             lblError.font = errorFont
             invalidateIntrinsicContentSize()
         }
     }
     
-    public var errorTextColor = UIColor.red {
+    public var errorTextColor = UIColor(red: 202.0/255.0, green: 88.0/255.0, blue: 37.0/255.0, alpha: 1.0) {
         didSet{
             lblError.textColor = errorTextColor
         }
     }
     
-    public var floatPlaceholderFont =   UIFont(name:"Inter-Regular", size: 12.0) ?? UIFont.systemFont(ofSize: 10){
+    public var floatPlaceholderFont =   UIFont(name:"Inter-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 10){
         didSet{
             lblFloatPlaceholder.font = floatPlaceholderFont
             invalidateIntrinsicContentSize()
@@ -264,7 +264,7 @@ open class DTTextField: UITextField {
     
     public func showError(message:String? = nil) {
         if let msg = message { errorMessage = msg }
-        borderColor = UIColor.systemRed
+        borderColor = UIColor(red: 202.0/255.0, green: 88.0/255.0, blue: 37.0/255.0, alpha: 1.0)
         showErrorLabel = true
     }
     
@@ -290,7 +290,7 @@ open class DTTextField: UITextField {
         lblFloatPlaceholder.frame   = CGRect.zero
         lblFloatPlaceholder.alpha   = 0.0
         lblFloatPlaceholder.font    = floatPlaceholderFont
-        lblFloatPlaceholder.text    = placeholderFinal.replacingOccurrences(of: "Masukkan ", with: "")
+        lblFloatPlaceholder.text    = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
         
         addSubview(lblFloatPlaceholder)
         
@@ -562,3 +562,4 @@ extension DTTextField : UITextFieldDelegate {
         return true
     }
 }
+

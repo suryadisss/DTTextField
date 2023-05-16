@@ -200,7 +200,7 @@ open class DTTextField: UITextField {
     
     fileprivate var placeholderFinal:String{
         if let attributed = attributedPlaceholder { return attributed.string }
-        return placeholder ?? " "
+                return placeholder ?? " "
     }
     
     fileprivate var isFloatLabelShowing:Bool = false
@@ -239,17 +239,30 @@ open class DTTextField: UITextField {
         didSet{
             
             guard let color = placeholderColor else {
-                lblFloatPlaceholder.text = placeholderFinal
+                let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+
+                 let labelText = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
+
+                let attributedText = NSMutableAttributedString(string: labelText)
+                attributedText.append(asterisk)
+                lblFloatPlaceholder.attributedText = attributedText
                 return
             }
-            
+            print("hoho \(placeholderFinal)")
             attributedPlaceholder = NSAttributedString(string: placeholderFinal,
                                                        attributes: [NSAttributedString.Key.foregroundColor:color])
         }
     }
     
     override public var attributedPlaceholder: NSAttributedString?{
-        didSet{ lblFloatPlaceholder.text = placeholderFinal }
+        didSet{
+            let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+
+             let labelText = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
+
+            let attributedText = NSMutableAttributedString(string: labelText)
+            attributedText.append(asterisk)
+            lblFloatPlaceholder.attributedText = attributedText}
     }
     
     override public init(frame: CGRect) {

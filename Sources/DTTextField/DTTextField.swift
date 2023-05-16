@@ -47,7 +47,7 @@ open class DTTextField: UITextField {
         case right
     }
     
-    fileprivate var lblFloatPlaceholder:UILabel             = UILabel()
+    public var lblFloatPlaceholder:UILabel             = UILabel()
     fileprivate var lblError:UILabel                        = UILabel()
     
     fileprivate let paddingX:CGFloat                        = 0
@@ -160,9 +160,9 @@ open class DTTextField: UITextField {
     
     public var placeholderColor:UIColor?{
         didSet{
-            guard let color = placeholderColor else { return }
-            attributedPlaceholder = NSAttributedString(string: placeholderFinal,
-                                                       attributes: [NSAttributedString.Key.foregroundColor:color])
+//            guard let color = placeholderColor else { return }
+//            attributedPlaceholder = NSAttributedString(string: placeholderFinal,
+//                                                       attributes: [NSAttributedString.Key.foregroundColor:color])
         }
     }
     
@@ -279,7 +279,7 @@ open class DTTextField: UITextField {
     }
     
 
-    fileprivate func commonInit() {
+    open func commonInit() {
         delegate=self
         
         dtborderStyle               = .bottom
@@ -290,7 +290,14 @@ open class DTTextField: UITextField {
         lblFloatPlaceholder.frame   = CGRect.zero
         lblFloatPlaceholder.alpha   = 0.0
         lblFloatPlaceholder.font    = floatPlaceholderFont
-        lblFloatPlaceholder.text    = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
+        let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+
+         let labelText = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
+
+        let attributedText = NSMutableAttributedString(string: labelText)
+        attributedText.append(asterisk)
+        lblFloatPlaceholder.attributedText = attributedText
+
         
         addSubview(lblFloatPlaceholder)
         
@@ -319,6 +326,20 @@ open class DTTextField: UITextField {
         
         
         invalidateIntrinsicContentSize()
+    }
+    
+    public func removeAsterisk(){
+        let labelText = self.lblFloatPlaceholder.text ?? ""  // Get the current text of the text field
+                
+                let attributedText = NSMutableAttributedString(string: labelText)
+                
+                // Find and remove the asterisk from the attributed text
+                let asteriskRange = (attributedText.string as NSString).range(of: "*")
+                if asteriskRange.location != NSNotFound {
+                    attributedText.deleteCharacters(in: asteriskRange)
+                }
+                
+        lblFloatPlaceholder.attributedText = attributedText
     }
     
     func setErrorLabelAlignment() {
@@ -539,7 +560,7 @@ open class DTTextField: UITextField {
         
         setErrorLabelAlignment()
         setFloatLabelAlignment()
-        lblFloatPlaceholder.textColor = isFirstResponder ? floatPlaceholderActiveColor : floatPlaceholderColor
+//        lblFloatPlaceholder.textColor = isFirstResponder ? floatPlaceholderActiveColor : floatPlaceholderColor
         
         switch floatingDisplayStatus {
         case .never:

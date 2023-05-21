@@ -241,28 +241,34 @@ open class DTTextField: UITextField {
             guard let color = placeholderColor else {
                 let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
 
-                 let labelText = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
+                var finalWords = [String]()
+                let labelText = placeholder?.replacingOccurrences(of: "Masukkan ", with: "")
+                let words = labelText?.components(separatedBy: " ")
 
-                let attributedText = NSMutableAttributedString(string: labelText)
+                if let words = words {
+                    for word in words {
+                        if word == word.uppercased() {
+                            finalWords.append(word)
+                        } else {
+                            finalWords.append(word.capitalized)
+                        }
+                    }
+                }
+
+                let updatedLabelText = finalWords.joined(separator: " ")
+
+                let attributedText = NSMutableAttributedString(string: updatedLabelText)
                 attributedText.append(asterisk)
                 lblFloatPlaceholder.attributedText = attributedText
                 return
             }
-            print("hoho \(placeholderFinal)")
             attributedPlaceholder = NSAttributedString(string: placeholderFinal,
                                                        attributes: [NSAttributedString.Key.foregroundColor:color])
         }
     }
     
     override public var attributedPlaceholder: NSAttributedString?{
-        didSet{
-            let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-
-             let labelText = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
-
-            let attributedText = NSMutableAttributedString(string: labelText)
-            attributedText.append(asterisk)
-            lblFloatPlaceholder.attributedText = attributedText}
+        didSet{lblFloatPlaceholder.text = placeholderFinal}
     }
     
     override public init(frame: CGRect) {
@@ -290,7 +296,7 @@ open class DTTextField: UITextField {
         borderColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
         showErrorLabel = false
     }
-    
+  
 
     open func commonInit() {
         delegate=self
@@ -305,9 +311,23 @@ open class DTTextField: UITextField {
         lblFloatPlaceholder.font    = floatPlaceholderFont
         let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
 
-         let labelText = placeholderFinal.capitalized.replacingOccurrences(of: "Masukkan ", with: "")
+        var finalWords = [String]()
+        let labelText = placeholder?.replacingOccurrences(of: "Masukkan ", with: "")
+        let words = labelText?.components(separatedBy: " ")
 
-        let attributedText = NSMutableAttributedString(string: labelText)
+        if let words = words {
+            for word in words {
+                if word == word.uppercased() {
+                    finalWords.append(word)
+                } else {
+                    finalWords.append(word.capitalized)
+                }
+            }
+        }
+
+        let updatedLabelText = finalWords.joined(separator: " ")
+
+        let attributedText = NSMutableAttributedString(string: updatedLabelText)
         attributedText.append(asterisk)
         lblFloatPlaceholder.attributedText = attributedText
 
@@ -594,6 +614,12 @@ open class DTTextField: UITextField {
 extension DTTextField : UITextFieldDelegate {
     open func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return true
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
     }
 }
 

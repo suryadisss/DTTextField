@@ -43,6 +43,7 @@ open class DTTextField: UITextField {
         case top
         case bottom
         case bottomspecial
+        case bottomNotFull
         case left
         case right
     }
@@ -81,7 +82,7 @@ open class DTTextField: UITextField {
                 dtLayer.cornerRadius        = 0.0
                 dtLayer.borderWidth         = borderWidth
                 dtLayer.borderColor         = borderColor.cgColor
-            case .bottom,.left,.right,.top,.bottomspecial:
+            case .bottom,.left,.right,.top,.bottomspecial,.bottomNotFull:
                 dtLayer.cornerRadius        = 0.0
                 dtLayer.borderWidth         = 0.0
                 borderLayer.backgroundColor = borderColor.cgColor
@@ -89,6 +90,8 @@ open class DTTextField: UITextField {
                     borderLayer.frame = CGRect(x: 0, y: dtLayer.bounds.size.height - borderWidth, width: dtLayer.bounds.size.width, height: borderWidth)
                 }else if dtborderStyle == .bottomspecial {
                     borderLayer.frame = CGRect(x: 0, y: 30, width: dtLayer.bounds.size.width, height: borderWidth)
+                }else if dtborderStyle == .bottomNotFull{
+                    borderLayer.frame = CGRect(x: 0, y: dtLayer.bounds.size.height - borderWidth, width: dtLayer.bounds.size.width - 100, height: borderWidth)
                 }else if dtborderStyle == .left{
                     borderLayer.frame = CGRect(x: 0, y: 0, width: borderWidth, height: dtLayer.bounds.size.height)
                 }else if dtborderStyle == .right{
@@ -141,7 +144,7 @@ open class DTTextField: UITextField {
             switch dtborderStyle {
             case .none,.rounded,.sqare:
                 dtLayer.borderColor = borderColor.cgColor
-            case .bottom,.right,.top,.left,.bottomspecial:
+            case .bottom,.right,.top,.left,.bottomspecial,.bottomNotFull:
                 borderLayer.backgroundColor = borderColor.cgColor
             }
         }
@@ -152,7 +155,7 @@ open class DTTextField: UITextField {
             switch dtborderStyle {
             case .none,.rounded,.sqare:
                 dtLayer.isHidden = !canShowBorder
-            case .bottom,.right,.top,.left,.bottomspecial:
+            case .bottom,.right,.top,.left,.bottomspecial,.bottomNotFull:
                 borderLayer.isHidden = !canShowBorder
             }
         }

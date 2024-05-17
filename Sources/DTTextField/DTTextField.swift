@@ -285,9 +285,11 @@ open class DTTextField: UITextField {
     }
     
     public func showError(message:String? = nil) {
-        if let msg = message { errorMessage = msg }
-        borderColor = UIColor(red: 202.0/255.0, green: 88.0/255.0, blue: 37.0/255.0, alpha: 1.0)
-        showErrorLabel = true
+        if !isHidden {
+            if let msg = message { errorMessage = msg }
+            borderColor = UIColor(red: 202.0/255.0, green: 88.0/255.0, blue: 37.0/255.0, alpha: 1.0)
+            showErrorLabel = true
+        }
     }
     
     public func hideError()  {

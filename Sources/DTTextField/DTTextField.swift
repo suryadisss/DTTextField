@@ -237,6 +237,14 @@ open class DTTextField: UITextField {
     public override var text: String?{
         didSet{ self.textFieldTextChanged() }
     }
+
+    private var shouldIgnoreDidSet = false
+    public var placeHolderTesting:String = ""{
+        didSet{
+            shouldIgnoreDidSet = true
+            placeholder = placeHolderTesting
+        }
+    }
     
     override public var placeholder: String?{
         didSet{

@@ -239,10 +239,10 @@ open class DTTextField: UITextField {
     }
 
     private var shouldIgnoreDidSet = false
-    public var placeHolderSpecific:String = ""{
+    public var placeholderSpecific:String = ""{
         didSet{
             shouldIgnoreDidSet = true
-            placeholder = placeHolderSpecific
+            placeholder = placeholderSpecific
         }
     }
     

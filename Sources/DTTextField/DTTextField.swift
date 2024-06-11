@@ -248,7 +248,9 @@ open class DTTextField: UITextField {
     
     override public var placeholder: String?{
         didSet{
-            
+            if shouldIgnoreDidSet{
+                return
+            }
             guard let color = placeholderColor else {
                 let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
 

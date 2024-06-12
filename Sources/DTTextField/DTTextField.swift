@@ -255,16 +255,21 @@ open class DTTextField: UITextField {
                 let asterisk = NSAttributedString(string: " *", attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
 
                 var finalWords = [String]()
-                let labelText = placeholder?.replacingOccurrences(of: "Masukkan ", with: "")
-                let words = labelText?.components(separatedBy: " ")
+                var labelText = ""
+                guard let placeholder else {return}
+                
+                if placeholder.lowercased().contains("masukkan"){
+                        labelText = placeholder.replacingOccurrences(of: "Masukkan ", with: "")
+                }else{
+                        labelText = placeholder.replacingOccurrences(of: "Pilih ", with: "")
+                }
 
-                if let words = words {
-                    for word in words {
-                        if word == word.uppercased() {
-                            finalWords.append(word)
-                        } else {
-                            finalWords.append(word.capitalized)
-                        }
+                let words = labelText.components(separatedBy: " ")
+                for word in words {
+                    if word == word.uppercased() {
+                        finalWords.append(word)
+                    } else {
+                        finalWords.append(word.capitalized)
                     }
                 }
 

@@ -105,7 +105,10 @@ open class DTTextField: UITextField {
     }
     
     public var errorMessage:String = ""{
-        didSet{ lblError.text = errorMessage }
+        didSet{ lblError.text = errorMessage
+            lblError.accessibilityIdentifier = (self.placeholder ?? "")+"error"
+            lblError.accessibilityLabel = (self.placeholder ?? "")+"error2"
+        }
     }
     
     public var animateFloatPlaceholder:Bool = true
